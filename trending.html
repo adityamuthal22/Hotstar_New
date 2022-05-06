@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            #aditya{
+            /* margin-top: 5%; */
+            margin: auto;
+            /* text-align: center; */
+            font-family: roboto;
+            font-weight: bold;
+            /* border: 1px solid blue; */
+             display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        } 
+        #aditya>div{
+            border: 1px solid red;
+            text-align: center;
+            height: 400px;
+        }
+        #poster{
+            height:50%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="aditya"></div>
+</body>
+</html>
+<script>
+       const url1=`https://api.themoviedb.org/3/trending/movie/week?api_key=1425d0f3ef1b1b82d3cd2f404c010ec1`;
+
+fetch(url1)
+          .then(function(res){
+              return res.json();
+          })
+          .then(function(res){
+              append(res.results)
+              console.log(res.results)
+          })
+          .catch(function(err){
+              console.log("err:",err);
+          })
+
+function append(data){
+    let box = document.querySelector("#aditya");
+    box.innerHTML=null;
+    data.forEach(function(ele){
+
+        // let container = document.getElementById("aditya");
+//  console.log(ele.title)
+      let div=document.createElement("div");
+     
+    let image=document.createElement("img");
+    image.src=  `https://image.tmdb.org/t/p/original${ele.poster_path}`;
+    image.setAttribute("id","poster")
+
+    let name=document.createElement("p");
+    name.innerText=`Movie Title:-${ele.title}`;
+
+    let date=document.createElement("p");
+    date.innerText=`Release_Date:-${ele.release_date}`;
+
+    let media=document.createElement("p");
+    media.innerText=`Media_type:-${ele.media_type}`;
+// //   console.log(name)
+
+
+    div.append(image,name,date,media);
+    document.querySelector("#aditya").append(div)
+    })
+
+
+
+}
+</script>
